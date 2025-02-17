@@ -1,4 +1,6 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { Order } from "src/orders/orders.model";
+import { User } from "src/users/users.model";
 
 @Table({tableName: "shipping"})
 export class Shipping extends Model<Shipping>{
@@ -9,12 +11,14 @@ export class Shipping extends Model<Shipping>{
       })
       id: number;
 
+      @ForeignKey(()=> Order)
     @Column({
         type: DataType.INTEGER,
         allowNull: false
     })
     order_id: number;
-    
+
+    @ForeignKey(()=> User)
     @Column({
         type: DataType.INTEGER,
         allowNull: false
@@ -44,4 +48,10 @@ export class Shipping extends Model<Shipping>{
         allowNull: false
     })
     phone_number: string;
+
+    @BelongsTo(() => User)
+    user: User;
+  
+    @BelongsTo(() => Order)
+    order: Order;
 }

@@ -1,4 +1,12 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Cart } from 'src/cart/cart.model';
+import { Order_items } from 'src/order_items/order_items.model';
+import { Order } from 'src/orders/orders.model';
+import { Payment } from 'src/payments/payment.model';
+import { Products } from 'src/products/product.model';
+import { Reviews } from 'src/reviews/reviews.model';
+import { Shipping } from 'src/shipping/shipping.model';
+import { Wishlist } from 'src/wishlist/wishlist.model';
 
 @Table({ tableName: 'users' })
 export class User extends Model<User> {
@@ -69,4 +77,22 @@ export class User extends Model<User> {
     type: DataType.STRING,
   })
   avatar?: string;
+
+  @HasMany(() => Order)
+  orders: Order[];
+
+  @HasMany(() => Cart)
+  carts: Cart[];
+
+  @HasMany(() => Payment)
+  payments: Payment[];
+
+  @HasMany(() => Reviews)
+  reviews: Reviews[];
+
+  @HasMany(() => Shipping)
+  shippings: Shipping[];
+
+  @HasMany(() => Wishlist)
+  wishlists: Wishlist[];
 }

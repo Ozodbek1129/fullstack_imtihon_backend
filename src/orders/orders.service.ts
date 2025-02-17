@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectModel } from '@nestjs/sequelize';
-import { Orders } from './orders.model';
+import { Order } from './orders.model';
 import { CreationAttributes } from 'sequelize';
 
 @Injectable()
 export class OrdersService {
-  constructor(@InjectModel(Orders) private orderModel: typeof Orders){}
+  constructor(@InjectModel(Order) private orderModel: typeof Order){}
   create(createOrderDto: CreateOrderDto) {
-    return this.orderModel.create(createOrderDto as CreationAttributes<Orders>);
+    return this.orderModel.create(createOrderDto as CreationAttributes<Order>);
   }
 
   findAll() {
