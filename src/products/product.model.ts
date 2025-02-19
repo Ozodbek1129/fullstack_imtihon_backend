@@ -29,6 +29,12 @@ export class Products extends Model<Products> {
   name: string;
 
   @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  description: string;
+
+  @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
@@ -36,9 +42,17 @@ export class Products extends Model<Products> {
 
   @Column({
     type: DataType.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: false
   })
   is_new: boolean;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: true,
+    defaultValue: false
+  })
+  is_like: boolean;
 
   @Column({
     type: DataType.STRING,

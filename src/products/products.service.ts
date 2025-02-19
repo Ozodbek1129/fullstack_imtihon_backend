@@ -12,8 +12,10 @@ export class ProductsService {
     return this.productModel.create(createProductDto as CreationAttributes<Products>)
   }
 
-  findAll() {
-    return this.productModel.findAll();
+  findAll(categoryId: number) {
+    return this.productModel.findAll({
+      where: { category_id: categoryId },
+    });
   }
 
   findOne(id: number) {
@@ -27,5 +29,14 @@ export class ProductsService {
 
   remove(id: number) {
     return this.productModel.destroy({where: {id}});
+  }
+
+  async updateImage(productId: number, filename: string) {
+    const product = await this.productModel.findByPk(productId);
+    if (!product) throw new Error('Product not found');
+
+    product.image = `/uploads/${filename}`;
+    await product.save();
+    return product;
   }
 }

@@ -4,6 +4,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Categories } from './categories.model';
 import { CreationAttributes } from 'sequelize';
+import { Products } from 'src/products/product.model';
 
 @Injectable()
 export class CategoriesService {
@@ -12,12 +13,14 @@ export class CategoriesService {
     return this.categoryModel.create(createCategoryDto as CreationAttributes<Categories>);
   }
 
-  findAll() {
-    return this.categoryModel.findAll();
+  async findAll() {
+    return this.categoryModel.findAll({
+      include: [{ model: Products }], 
+    });
   }
 
   findOne(id: number) {
-    return this.categoryModel.findOne({where: {id}});
+    return this.categoryModel.findOne({where: {id}, include: [{ model: Products }], });
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {

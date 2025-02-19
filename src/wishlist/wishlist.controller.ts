@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query } from '@nestjs/common';
 import { WishlistService } from './wishlist.service';
 import { CreateWishlistDto } from './dto/create-wishlist.dto';
 import { UpdateWishlistDto } from './dto/update-wishlist.dto';
@@ -13,9 +13,10 @@ export class WishlistController {
   }
 
   @Get()
-  findAll() {
-    return this.wishlistService.findAll();
+  findUserWishlist(@Query('user_id', ParseIntPipe) userId: number) {
+    return this.wishlistService.findAll(userId);
   }
+  
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -27,8 +28,8 @@ export class WishlistController {
     return this.wishlistService.update(+id, updateWishlistDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.wishlistService.remove(+id);
+  @Delete(':product_id')
+  remove(@Param('product_id') product_id: string) {
+    return this.wishlistService.remove(+product_id);
   }
 }

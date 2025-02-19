@@ -1,9 +1,13 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateProductDto {
     @IsString()
     @IsNotEmpty()
     name: string;
+
+    @IsString()
+    @IsNotEmpty()
+    description: string;
 
     @IsNumber()
     @IsNotEmpty()
@@ -12,6 +16,10 @@ export class CreateProductDto {
     @IsBoolean()
     @IsNotEmpty()
     is_new: boolean;
+    
+    @IsOptional()
+    @IsBoolean()
+    is_like?: boolean;
 
     @IsString()
     @IsNotEmpty()

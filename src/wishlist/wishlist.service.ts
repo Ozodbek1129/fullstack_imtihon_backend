@@ -4,6 +4,7 @@ import { UpdateWishlistDto } from './dto/update-wishlist.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Wishlist } from './wishlist.model';
 import { CreationAttributes } from 'sequelize';
+import { Products } from 'src/products/product.model';
 
 @Injectable()
 export class WishlistService {
@@ -12,9 +13,13 @@ export class WishlistService {
     return this.wishlistModel.create(createWishlistDto as CreationAttributes<Wishlist>)
   }
 
-  findAll() {
-    return this.wishlistModel.findAll();
+  findAll(userId: number) {
+    return this.wishlistModel.findAll({
+      where: { user_id: userId },
+      include: [{ model: Products }] 
+    });
   }
+  
 
   findOne(id: number) {
     return this.wishlistModel.findOne({where: {id}});
@@ -25,7 +30,7 @@ export class WishlistService {
     return res?.update(updateWishlistDto);
   }
 
-  remove(id: number) {
-    return this.wishlistModel.destroy({where: {id}});
+  remove(product_id: number) {
+    return this.wishlistModel.destroy({where: {product_id}});
   }
 }
