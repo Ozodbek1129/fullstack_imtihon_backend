@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseIntPipe, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -13,6 +13,17 @@ export class ProductsController {
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
+
+  @Get()
+async getProducts(
+  @Query('category_id') categoryId?: number,
+  @Query('search') search?: string,
+  @Query('page') page: number = 1,
+  @Query('limit') limit: number = 10,
+) {
+  return this.productsService.findAll(categoryId ? Number(categoryId) : undefined, search, page, limit);
+}
+
 
   @Get('category/:categoryId')
   findByCategory(@Param('categoryId', ParseIntPipe) categoryId: number) {
