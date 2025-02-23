@@ -24,6 +24,12 @@ async getProducts(
   return this.productsService.findAll(categoryId ? Number(categoryId) : undefined, search, page, limit);
 }
 
+  
+@Get("getAll")
+getAll() {
+  return this.productsService.findAll();
+}
+
 
   @Get('category/:categoryId')
   findByCategory(@Param('categoryId', ParseIntPipe) categoryId: number) {

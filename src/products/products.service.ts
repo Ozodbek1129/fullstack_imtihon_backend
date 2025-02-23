@@ -14,7 +14,7 @@ export class ProductsService {
     return this.productModel.create(createProductDto as CreationAttributes<Products>);
   }
 
-  async findAll(categoryId?: number, search?: string, page: number = 1, limit: number = 10) {
+  async findAll(categoryId?: number, search?: string, page: number = 1, limit: number = 100) {
     const where: any = {};
 
     if (categoryId) {
@@ -38,6 +38,10 @@ export class ProductsService {
       total: count,
       totalPages: Math.ceil(count / limit),
     };
+  }
+
+  getAllProducts(){
+    return this.productModel.findAll()
   }
 
   findOne(id: number) {
